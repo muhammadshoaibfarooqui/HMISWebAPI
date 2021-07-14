@@ -71,11 +71,11 @@ namespace HMISWebAPI.Controllers
 
         [HttpPut]
         [Route("UpdateCompanySetup")]
-        public async Task<ActionResult<CompanySetup>> UpdateCompanySetup(string Id, CompanySetup companySetup)
+        public async Task<ActionResult<CompanySetup>> UpdateCompanySetup(string Id, CompanySetupDTO companySetup)
         {
             try
             {
-                if (Id != companySetup.CmpnyCode)
+                if (String.IsNullOrEmpty(Id) /*companySetup.CmpnyCode*/)
                 {
                     return BadRequest("Id Mismatched");
                 }
@@ -84,7 +84,7 @@ namespace HMISWebAPI.Controllers
                 {
                     return NotFound($"CompanySetup companySetup.CmpnyCode ={Id} Not Found");
                 }
-                var companySetupUpdate = await _companySetup.UpdateCompanySetup(companySetup);
+                var companySetupUpdate = await _companySetup.UpdateCompanySetup(Id,companySetup);
                 return companySetupUpdate;
             }
             catch (Exception ex)

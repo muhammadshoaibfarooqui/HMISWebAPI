@@ -42,9 +42,12 @@ namespace HMISWebAPI.Services
             //throw new NotImplementedException();
         }
 
-        public async Task<CompanySetup> UpdateCompanySetup(CompanySetup companySetup)
+        public async Task<CompanySetup> UpdateCompanySetup(string Id,CompanySetupDTO companySetupDTO)
         {
-            var result = await _companySetupRepos.UpdateCompanySetup(companySetup);
+            var c = await _companySetupRepos.GetCompanySetupById(Id);
+            c.CmpnyAddres= companySetupDTO.CmpnyAddres;
+            c.CmpnyCode = Id;
+            var result = await _companySetupRepos.UpdateCompanySetup(c);
             return result;
             //throw new NotImplementedException();
         }

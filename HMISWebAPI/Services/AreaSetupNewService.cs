@@ -28,7 +28,14 @@ namespace HMISWebAPI.Services
             //throw new NotImplementedException();
         }
 
-        public async Task<AreaSetupNew> GetAreaSetupNewId(string Id)
+        public async Task<AreaSetupNew> GetAreaSetupNewByIdAll(string Id)
+        {
+            var result = await _areaSetupNewRepos.GetAreaSetupNewByIdAll(Id);
+            return result;
+            //throw new NotImplementedException();
+        }
+
+        public async Task<AreaSetupNewVM> GetAreaSetupNewId(string Id)
         {
             var result = await _areaSetupNewRepos.GetAreaSetupNewId(Id);
             return result;
@@ -42,10 +49,35 @@ namespace HMISWebAPI.Services
             //throw new NotImplementedException();
         }
 
-        public async Task<AreaSetupNew> UpdateAreaSetupNew(AreaSetupNew areaSetupNew)
+        //public async Task<AreaSetupNew> UpdateAreaSetupNew(AreaSetupNew areaSetupNew)
+        //{
+        //    var result = await _areaSetupNewRepos.UpdateAreaSetupNew(areaSetupNew);
+        //    return result;
+        //    //throw new NotImplementedException();
+        //}
+
+        public async Task<AreaSetupNew> UpdateAreaSetupNew(String Id,AreaSetupNewDTO areaSetupNewDTO)
         {
-            var result = await _areaSetupNewRepos.UpdateAreaSetupNew(areaSetupNew);
-            return result;
+            var c = await _areaSetupNewRepos.GetAreaSetupNewByIdAll(Id);
+            if(Id == null || String.IsNullOrEmpty(Id))
+            {
+                return null;
+            }
+            else
+            {
+                c.AreaCode = Id;
+                c.Description = areaSetupNewDTO.Description;
+                c.CityCode = areaSetupNewDTO.CityCode;
+                c.MakerDatetime = DateTime.Now;
+                c.MakerId = areaSetupNewDTO.MakerId;
+                c.MakerwrkstId = areaSetupNewDTO.MakerwrkstId;
+                c.UpdateDatetime = DateTime.Now;
+                c.UpdateId = areaSetupNewDTO.UpdateId;
+                c.UpdatewrkstId = areaSetupNewDTO.UpdatewrkstId;
+                var result = await _areaSetupNewRepos.UpdateAreaSetupNew(c);
+                return result;
+            }
+            
             //throw new NotImplementedException();
         }
     }

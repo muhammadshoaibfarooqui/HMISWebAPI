@@ -9,9 +9,13 @@ namespace HMISWebAPI.Services
     public interface IAreaSetupNew
     {
         Task<IEnumerable<AreaSetupNew>> GetAreaSetupNewAll();
-        Task<AreaSetupNew> GetAreaSetupNewId(string Id);
+        Task<AreaSetupNewVM> GetAreaSetupNewId(string Id);
+
+        Task<AreaSetupNew> GetAreaSetupNewByIdAll(string Id);
         Task<AreaSetupNew> InsertAreaSetupNew(AreaSetupNew areaSetupNew);
-        Task<AreaSetupNew> UpdateAreaSetupNew(AreaSetupNew areaSetupNew);
+        //Task<AreaSetupNew> UpdateAreaSetupNew(AreaSetupNew areaSetupNew);
+
+        Task<AreaSetupNew> UpdateAreaSetupNew(string Id, AreaSetupNewDTO areaSetupNewDTO);
         Task<AreaSetupNew> DeleteAreaSetupNew(string Id);
     }
 }

@@ -52,47 +52,48 @@ namespace HMISWebAPI.Repositories
 
         public async Task<CompanySetup> UpdateCompanySetup(CompanySetup companySetup)
         {
-            var result = await _hMISManagementContext.companySetups.FirstOrDefaultAsync(a => a.CmpnyCode == companySetup.CmpnyCode);
-            if(result != null)
-            {
-                result.CmpnyCode = companySetup.CmpnyCode;
-                result.CmpnyName = companySetup.CmpnyName;
-                result.CmpnySlogin = companySetup.CmpnySlogin;
-                result.CmpnyLogo = companySetup.CmpnyLogo;
-                result.CmpnyAddres = companySetup.CmpnyAddres;
-                result.CmpnyAddres1 = companySetup.CmpnyAddres1;
-                result.CmpnyAddres2 = companySetup.CmpnyAddres2;
-                result.CmpnyUanNo = companySetup.CmpnyUanNo;
-                result.CmpnyLandLine = companySetup.CmpnyLandLine;
+            var result =  _hMISManagementContext.companySetups.Update(companySetup);
+            //if(result != null)
+            //{
+            //    result.CmpnyCode = companySetup.CmpnyCode;
+            //    result.CmpnyName = companySetup.CmpnyName;
+            //    result.CmpnySlogin = companySetup.CmpnySlogin;
+            //    result.CmpnyLogo = companySetup.CmpnyLogo;
+            //    result.CmpnyAddres = companySetup.CmpnyAddres;
+            //    result.CmpnyAddres1 = companySetup.CmpnyAddres1;
+            //    result.CmpnyAddres2 = companySetup.CmpnyAddres2;
+            //    result.CmpnyUanNo = companySetup.CmpnyUanNo;
+            //    result.CmpnyLandLine = companySetup.CmpnyLandLine;
 
-                result.CmpnyFaxNo = companySetup.CmpnyFaxNo;
-                result.CmpnyEmail = companySetup.CmpnyEmail;
-                result.CmpnyUrl = companySetup.CmpnyUrl;
-                result.CmpnyFlag = companySetup.CmpnyFlag;
-                result.CmpnyContPerson = companySetup.CmpnyContPerson;
+            //    result.CmpnyFaxNo = companySetup.CmpnyFaxNo;
+            //    result.CmpnyEmail = companySetup.CmpnyEmail;
+            //    result.CmpnyUrl = companySetup.CmpnyUrl;
+            //    result.CmpnyFlag = companySetup.CmpnyFlag;
+            //    result.CmpnyContPerson = companySetup.CmpnyContPerson;
 
-                result.CmpnyContDesig = companySetup.CmpnyContDesig;
-                result.CmpnyContNo = companySetup.CmpnyContNo;
-                result.MakerDatetime = DateTime.Now;
-                result.MakerId = companySetup.MakerId;
-                result.MakerwrkstId = companySetup.MakerwrkstId;
+            //    result.CmpnyContDesig = companySetup.CmpnyContDesig;
+            //    result.CmpnyContNo = companySetup.CmpnyContNo;
+            //    result.MakerDatetime = DateTime.Now;
+            //    result.MakerId = companySetup.MakerId;
+            //    result.MakerwrkstId = companySetup.MakerwrkstId;
 
-                result.UpdateDatetime = DateTime.Now;
-                result.UpdateId = companySetup.UpdateId;
-                result.UpdatewrkstId = companySetup.UpdatewrkstId;
-                result.CmpnyZakat = companySetup.CmpnyZakat;
-                result.CmpnyDiscount = companySetup.CmpnyDiscount;
+            //    result.UpdateDatetime = DateTime.Now;
+            //    result.UpdateId = companySetup.UpdateId;
+            //    result.UpdatewrkstId = companySetup.UpdatewrkstId;
+            //    result.CmpnyZakat = companySetup.CmpnyZakat;
+            //    result.CmpnyDiscount = companySetup.CmpnyDiscount;
 
-                result.CmpnyGlCode = companySetup.CmpnyGlCode;
-                result.CmpnyOldCId = companySetup.CmpnyOldCId;
-                result.CmpnyStatus = companySetup.CmpnyStatus;
-                result.CmpnyPkgRateRef = companySetup.CmpnyPkgRateRef;
+            //    result.CmpnyGlCode = companySetup.CmpnyGlCode;
+            //    result.CmpnyOldCId = companySetup.CmpnyOldCId;
+            //    result.CmpnyStatus = companySetup.CmpnyStatus;
+            //    result.CmpnyPkgRateRef = companySetup.CmpnyPkgRateRef;
 
-                result.CmpnyEbsAccNo = companySetup.CmpnyEbsAccNo;
-                await _hMISManagementContext.SaveChangesAsync();
-                return result;
-            }
-            return null;
+            //    result.CmpnyEbsAccNo = companySetup.CmpnyEbsAccNo;
+            //    await _hMISManagementContext.SaveChangesAsync();
+            //    return result;
+            //}
+            await _hMISManagementContext.SaveChangesAsync();
+            return result.Entity;
             //throw new NotImplementedException();
         }
     }

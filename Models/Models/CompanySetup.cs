@@ -40,4 +40,14 @@ namespace Models.Models
         public string CmpnyPkgRateRef { get; set; }
         public string CmpnyEbsAccNo { get; set; }
     }
+
+    public class CompanySetupDTO
+    {
+        public string CmpnyName { get; set; }
+        public string CmpnySlogin { get; set; }
+        public string CmpnyLogo { get; set; }
+        public string CmpnyAddres { get; set; }
+        public string CmpnyAddres1 { get; set; }
+        public string CmpnyAddres2 { get; set; }
+    }
 }

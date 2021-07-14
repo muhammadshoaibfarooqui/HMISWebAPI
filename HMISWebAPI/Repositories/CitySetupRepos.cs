@@ -56,7 +56,7 @@ namespace HMISWebAPI.Repositories
             if(result != null)
             {
                 result.CityCode = citySetup.CityCode;
-                result.Description = citySetup.Description;
+                result.CityDescription = citySetup.CityDescription;
                 result.MakerDatetime = DateTime.Now;
                 result.MakerId = citySetup.MakerId;
                 result.MakerwrkstId = citySetup.MakerwrkstId;

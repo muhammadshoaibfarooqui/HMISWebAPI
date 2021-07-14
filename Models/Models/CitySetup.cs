@@ -11,7 +11,9 @@ namespace Models.Models
     public partial class CitySetup
     {
         public string CityCode { get; set; }
-        public string Description { get; set; }
+        //public string Description { get; set; }
+
+        public string CityDescription { get; set; }
         public DateTime? MakerDatetime { get; set; }
         public string MakerId { get; set; }
         public string MakerwrkstId { get; set; }

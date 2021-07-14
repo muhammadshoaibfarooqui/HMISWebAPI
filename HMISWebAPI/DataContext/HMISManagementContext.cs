@@ -98,9 +98,9 @@ namespace HMISWebAPI.DataContext
                     .HasMaxLength(50)
                     .HasColumnName("CITY_CODE");
 
-                entity.Property(e => e.Description)
+                entity.Property(e => e.CityDescription)
                     .HasMaxLength(50)
-                    .HasColumnName("DESCRIPTION");
+                    .HasColumnName("CITYDESCRIPTION");
 
                 entity.Property(e => e.MakerDatetime)
                     .HasColumnType("date")

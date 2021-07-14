@@ -17,7 +17,7 @@ namespace HMISWebAPI.Repositories
         }
         public async Task<CompanyClientSetup> DeleteCompanyClientSetup(string Id)
         {
-            var result = await _hMISManagementContext.companyClientSetups.Where(a => a.MakerId == Id).FirstOrDefaultAsync();
+            var result = await _hMISManagementContext.companyClientSetups.Where(a => a.CmpnyClintCode == Id).FirstOrDefaultAsync();
             if (result != null)
             {
                 _hMISManagementContext.companyClientSetups.Remove(result);
