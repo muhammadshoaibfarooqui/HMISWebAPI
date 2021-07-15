@@ -35,8 +35,23 @@ namespace HMISWebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("GetDepartmentSetupByIdAll")]
+        public async Task<ActionResult<DepartmentSetup>> GetDepartmentSetupByIdAll(string Id)
+        {
+            try
+            {
+                var result = await _departmentSetup.GetDepartmentSetupByIdAll(Id);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Data is not retrieving from database");
+            }
+        }
+
+        [HttpGet]
         [Route("GetDepartmentSetupById")]
-        public async Task<ActionResult<DepartmentSetup>> GetDepartmentSetupById(string Id)
+        public async Task<ActionResult<DepartmentSetupDTO>> GetDepartmentSetupById(string Id)
         {
             try
             {
@@ -71,10 +86,31 @@ namespace HMISWebAPI.Controllers
         [HttpPut]
         [Route("UpdateDepartmentSetup")]
         public async Task<ActionResult<DepartmentSetup>> UpdateDepartmentSetup(string Id, DepartmentSetup departmentSetup)
+        //{
+        //    try
+        //    {
+        //        if (Id != departmentSetup.DptCode)
+        //        {
+        //            return BadRequest("Id Mismatched");
+        //        }
+        //        var updateEmployee = await _departmentSetup.GetDepartmentSetupById(Id);
+        //        if (updateEmployee == null)
+        //        {
+        //            return NotFound($"DepartmentSetup departmentSetup.Id ={Id} Not Found");
+        //        }
+        //        var employeeUpdate = await _departmentSetup.UpdateDepartmentSetup(departmentSetup);
+        //        return employeeUpdate;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, "Data is not retrieving from database");
+        //    }
+        //}
+
         {
             try
             {
-                if (Id != departmentSetup.DptCode)
+                if (String.IsNullOrEmpty(Id))
                 {
                     return BadRequest("Id Mismatched");
                 }
@@ -83,7 +119,7 @@ namespace HMISWebAPI.Controllers
                 {
                     return NotFound($"DepartmentSetup departmentSetup.Id ={Id} Not Found");
                 }
-                var employeeUpdate = await _departmentSetup.UpdateDepartmentSetup(departmentSetup);
+                var employeeUpdate = await _departmentSetup.UpdateDepartmentSetup(Id,departmentSetup);
                 return employeeUpdate;
             }
             catch (Exception ex)

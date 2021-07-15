@@ -9,7 +9,8 @@ namespace HMISWebAPI.Repositories
     public interface IDepartmentSetupRepos
     {
         Task<IEnumerable<DepartmentSetup>> GetDepartmentSetupAll();
-        Task<DepartmentSetup> GetDepartmentSetupById(string Id);
+        Task<DepartmentSetup> GetDepartmentSetupByIdAll(string Id);
+        Task<DepartmentSetupDTO> GetDepartmentSetupById(string Id);
         Task<DepartmentSetup> InsertDepartmentSetup(DepartmentSetup departmentSetup);
         Task<DepartmentSetup> UpdateDepartmentSetup(DepartmentSetup departmentSetup);
         Task<DepartmentSetup> DeleteDepartmentSetup(string Id);

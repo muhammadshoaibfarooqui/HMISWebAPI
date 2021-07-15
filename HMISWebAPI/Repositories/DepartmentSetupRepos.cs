@@ -34,9 +34,27 @@ namespace HMISWebAPI.Repositories
             //throw new NotImplementedException();
         }
 
-        public async Task<DepartmentSetup> GetDepartmentSetupById(string Id)
+        public async Task<DepartmentSetup> GetDepartmentSetupByIdAll(string Id)
         {
             return await _hMISManagementContext.departmentSetups.FirstOrDefaultAsync(a => a.DptCode == Id);
+            //throw new NotImplementedException();
+        }
+
+        public async Task<DepartmentSetupDTO> GetDepartmentSetupById(string Id)
+        {
+            var c = new DepartmentSetupDTO();
+            var result = await _hMISManagementContext.departmentSetups.FirstOrDefaultAsync(a => a.DptCode == Id);
+            if(result != null || String.IsNullOrEmpty(Id))
+            {
+                c.DptCode = result.DptCode;
+                c.DptDescription = result.DptDescription;
+                c.DptStatus = result.DptStatus;
+            }
+            else
+            {
+                return null;
+            }
+            return c;
             //throw new NotImplementedException();
         }
 
@@ -50,27 +68,30 @@ namespace HMISWebAPI.Repositories
 
         public async Task<DepartmentSetup> UpdateDepartmentSetup(DepartmentSetup departmentSetup)
         {
-            var result = await _hMISManagementContext.departmentSetups.FirstOrDefaultAsync(a => a.DptCode == departmentSetup.DptCode);
-            if (result != null)
-            {
-                result.DptCode = departmentSetup.DptCode;
-                result.DptDescription = departmentSetup.DptDescription;
-                result.DptStatus = departmentSetup.DptStatus;
+            var result = _hMISManagementContext.departmentSetups.Update(departmentSetup);
+            await _hMISManagementContext.SaveChangesAsync();
+            return result.Entity;
+            //var result = await _hMISManagementContext.departmentSetups.FirstOrDefaultAsync(a => a.DptCode == departmentSetup.DptCode);
+            //if (result != null)
+            //{
+            //    result.DptCode = departmentSetup.DptCode;
+            //    result.DptDescription = departmentSetup.DptDescription;
+            //    result.DptStatus = departmentSetup.DptStatus;
 
-                result.MakerDatetime = DateTime.Now;
-                result.MakerId = departmentSetup.MakerId;
-                result.MakerwrkstId = departmentSetup.MakerwrkstId;
+            //    result.MakerDatetime = DateTime.Now;
+            //    result.MakerId = departmentSetup.MakerId;
+            //    result.MakerwrkstId = departmentSetup.MakerwrkstId;
 
-                result.UpdateDatetime = DateTime.Now;
-                result.UpdateId = departmentSetup.UpdateId;
-                result.UpdatewrkstId = departmentSetup.UpdatewrkstId;
+            //    result.UpdateDatetime = DateTime.Now;
+            //    result.UpdateId = departmentSetup.UpdateId;
+            //    result.UpdatewrkstId = departmentSetup.UpdatewrkstId;
 
-                result.EbsDptCode = departmentSetup.EbsDptCode;
+            //    result.EbsDptCode = departmentSetup.EbsDptCode;
                 
-                await _hMISManagementContext.SaveChangesAsync();
-                return result;
-            }
-            return null;
+            //    await _hMISManagementContext.SaveChangesAsync();
+            //    return result;
+            //}
+            //return null;
             //throw new NotImplementedException();
         }
     }

@@ -28,7 +28,14 @@ namespace HMISWebAPI.Services
             //throw new NotImplementedException();
         }
 
-        public async Task<DepartmentSetup> GetDepartmentSetupById(string Id)
+        public async Task<DepartmentSetup> GetDepartmentSetupByIdAll(string Id)
+        {
+            var result = await _departmentSetupRepos.GetDepartmentSetupByIdAll(Id);
+            return result;
+            //throw new NotImplementedException();
+        }
+
+        public async Task<DepartmentSetupDTO> GetDepartmentSetupById(string Id)
         {
             var result = await _departmentSetupRepos.GetDepartmentSetupById(Id);
             return result;
@@ -42,10 +49,30 @@ namespace HMISWebAPI.Services
             //throw new NotImplementedException();
         }
 
-        public async Task<DepartmentSetup> UpdateDepartmentSetup(DepartmentSetup departmentSetup)
+        public async Task<DepartmentSetup> UpdateDepartmentSetup(string Id,DepartmentSetup departmentSetup)
         {
-            var result = await _departmentSetupRepos.UpdateDepartmentSetup(departmentSetup);
-            return result;
+            var c = await _departmentSetupRepos.GetDepartmentSetupByIdAll(Id);
+            if(Id != null)
+            {
+                c.DptCode = departmentSetup.DptCode;
+                c.DptDescription = departmentSetup.DptDescription;
+                c.DptStatus = departmentSetup.DptStatus;
+                c.MakerDatetime = DateTime.Now;
+                c.MakerId = departmentSetup.MakerId;
+                c.MakerwrkstId = departmentSetup.MakerwrkstId;
+                c.UpdateDatetime = DateTime.Now;
+                c.UpdateId = departmentSetup.UpdateId;
+                c.UpdatewrkstId = departmentSetup.UpdatewrkstId;
+                c.EbsDptCode = departmentSetup.EbsDptCode;
+                var result = await _departmentSetupRepos.UpdateDepartmentSetup(c);
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+            //var result = await _departmentSetupRepos.UpdateDepartmentSetup(departmentSetup);
+            //return result;
             //throw new NotImplementedException();
         }
     }

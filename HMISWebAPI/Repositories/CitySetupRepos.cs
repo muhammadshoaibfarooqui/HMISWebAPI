@@ -35,10 +35,24 @@ namespace HMISWebAPI.Repositories
             //throw new NotImplementedException();
         }
 
-        public async Task<CitySetup> GetCitySetupById(string Id)
+        public async Task<CitySetup> GetCitySetupByIdAll(string Id)
         {
             var result = await _hMISManagementContext.citySetups.FirstOrDefaultAsync(a => a.CityCode == Id);
             return result;
+            //throw new NotImplementedException();
+        }
+
+        public async Task<CitySetupDTO> GetCitySetupById(string Id)
+        {
+            var c = new CitySetupDTO();
+            var result = await _hMISManagementContext.citySetups.FirstOrDefaultAsync(a => a.CityCode == Id);
+            if(result != null || !String.IsNullOrEmpty(Id))
+            {
+                c.CityCode = result.CityCode;
+                c.CityDescription = result.CityDescription;
+                c.Status = result.Status;
+            }
+            return c;
             //throw new NotImplementedException();
         }
 
@@ -52,22 +66,25 @@ namespace HMISWebAPI.Repositories
 
         public async Task<CitySetup> UpdateCitySetup(CitySetup citySetup)
         {
-            var result = await _hMISManagementContext.citySetups.FirstOrDefaultAsync(a => a.CityCode == citySetup.CityCode);
-            if(result != null)
-            {
-                result.CityCode = citySetup.CityCode;
-                result.CityDescription = citySetup.CityDescription;
-                result.MakerDatetime = DateTime.Now;
-                result.MakerId = citySetup.MakerId;
-                result.MakerwrkstId = citySetup.MakerwrkstId;
-                result.UpdateDatetime = citySetup.UpdateDatetime;
-                result.UpdateId = citySetup.UpdateId;
-                result.UpdatewrkstId = citySetup.UpdatewrkstId;
-                result.Status = citySetup.Status;
-                await _hMISManagementContext.SaveChangesAsync();
-                return result;
-            }
-            return null;
+            var result = _hMISManagementContext.citySetups.Update(citySetup);
+            await _hMISManagementContext.SaveChangesAsync();
+            return result.Entity;
+            //var result = await _hMISManagementContext.citySetups.FirstOrDefaultAsync(a => a.CityCode == citySetup.CityCode);
+            //if(result != null)
+            //{
+            //    result.CityCode = citySetup.CityCode;
+            //    result.CityDescription = citySetup.CityDescription;
+            //    result.MakerDatetime = DateTime.Now;
+            //    result.MakerId = citySetup.MakerId;
+            //    result.MakerwrkstId = citySetup.MakerwrkstId;
+            //    result.UpdateDatetime = citySetup.UpdateDatetime;
+            //    result.UpdateId = citySetup.UpdateId;
+            //    result.UpdatewrkstId = citySetup.UpdatewrkstId;
+            //    result.Status = citySetup.Status;
+            //    await _hMISManagementContext.SaveChangesAsync();
+            //    return result;
+            //}
+            //return null;
             //throw new NotImplementedException();
         }
     }

@@ -28,7 +28,13 @@ namespace HMISWebAPI.Services
             //throw new NotImplementedException();
         }
 
-        public async Task<CitySetup> GetCitySetupById(string Id)
+        public async Task<CitySetup> GetCitySetupByIdAll(string Id)
+        {
+            var result = await _citySetupRepos.GetCitySetupByIdAll(Id);
+            return result;
+            //throw new NotImplementedException();
+        }
+        public async Task<CitySetupDTO> GetCitySetupById(string Id)
         {
             var result = await _citySetupRepos.GetCitySetupById(Id);
             return result;
@@ -42,10 +48,29 @@ namespace HMISWebAPI.Services
             //throw new NotImplementedException();
         }
 
-        public async Task<CitySetup> UpdateCitySetup(CitySetup citySetup)
+        public async Task<CitySetup> UpdateCitySetup(string Id,CitySetup citySetup)
         {
-            var result = await _citySetupRepos.UpdateCitySetup(citySetup);
-            return result;
+            var c = await _citySetupRepos.GetCitySetupByIdAll(Id);
+            if (Id != null && !String.IsNullOrEmpty(Id))
+            {
+                c.CityCode = citySetup.CityCode;
+                c.CityDescription = citySetup.CityDescription;
+                c.MakerDatetime = DateTime.Now; //citySetup.MakerDatetime;
+                c.MakerId = citySetup.MakerId;
+                c.MakerwrkstId = citySetup.MakerwrkstId;
+                c.UpdateDatetime = DateTime.Now; //citySetup.UpdateDatetime;
+                c.UpdateId = citySetup.UpdateId;
+                c.UpdatewrkstId = citySetup.UpdatewrkstId;
+                c.Status = citySetup.Status;
+                var result = await _citySetupRepos.UpdateCitySetup(c);
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+            //var result = await _citySetupRepos.UpdateCitySetup(citySetup);
+            //return result;
             //throw new NotImplementedException();
         }
     }

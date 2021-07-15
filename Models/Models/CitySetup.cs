@@ -22,4 +22,11 @@ namespace Models.Models
         public string UpdatewrkstId { get; set; }
         public bool? Status { get; set; }
     }
+
+    public partial class CitySetupDTO
+    {
+        public string CityCode { get; set; }
+        public string CityDescription { get; set; }
+        public bool? Status { get; set; }
+    }
 }

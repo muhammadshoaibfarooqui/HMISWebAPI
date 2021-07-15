@@ -20,4 +20,11 @@ namespace Models.Models
         public string UpdatewrkstId { get; set; }
         public string EbsDptCode { get; set; }
     }
+
+    public partial class DepartmentSetupDTO
+    {
+        public string DptCode { get; set; }
+        public string DptDescription { get; set; }
+        public bool? DptStatus { get; set; }
+    }
 }

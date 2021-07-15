@@ -65,7 +65,7 @@ namespace HMISWebAPI.Repositories
             
             
             var result2 = await _hMISManagementContext.citySetups.FirstOrDefaultAsync(b => b.CityCode == citycode);
-            if (result != null ) //result2 != null)
+            if (result != null || result2 != null)
             {
                 a.AreaCode = Id;
                 a.Description = result.Description;

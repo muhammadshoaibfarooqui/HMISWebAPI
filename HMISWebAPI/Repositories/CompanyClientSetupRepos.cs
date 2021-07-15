@@ -35,10 +35,29 @@ namespace HMISWebAPI.Repositories
             //throw new NotImplementedException();
         }
 
-        public async Task<CompanyClientSetup> GetCompanyClientSetupById(string Id)
+        public async Task<CompanyClientSetup> GetCompanyClientSetupByIdAll(string Id)
         {
             var result = await _hMISManagementContext.companyClientSetups.FirstOrDefaultAsync(a => a.CmpnyClintCode == Id);
             return result;
+            //throw new NotImplementedException();
+        }
+
+        public async Task<CompanyClientSetupDTO> GetCompanyClientSetupById(string Id)
+        {
+            var c = new CompanyClientSetupDTO();
+            var result = await _hMISManagementContext.companyClientSetups.FirstOrDefaultAsync(a => a.CmpnyClintCode == Id);
+            if(result != null)
+            {
+                c.CmpnyClintCode = result.CmpnyClintCode;
+                c.CmpnyClintName = result.CmpnyClintName;
+                c.CmpnyAddres = result.CmpnyAddres;
+                c.CmpnyContNo = result.CmpnyContNo;
+            }
+            else
+            {
+                return null;
+            }
+            return c;
             //throw new NotImplementedException();
         }
 
@@ -52,28 +71,31 @@ namespace HMISWebAPI.Repositories
 
         public async Task<CompanyClientSetup> UpdateCompanyClientSetup(CompanyClientSetup companyClientSetup)
         {
-            var result = await _hMISManagementContext.companyClientSetups.FirstOrDefaultAsync(a => a.CmpnyClintCode == companyClientSetup.CmpnyClintCode);
-            if (result != null)
-            {
-                result.CmpnyClintCode = companyClientSetup.CmpnyClintCode;
-                result.CmpnyClintName = companyClientSetup.CmpnyClintName;
-                result.CmpnyAddres = companyClientSetup.CmpnyAddres;
-                result.CmpnyAddres1 = companyClientSetup.CmpnyAddres1;
-                result.CmpnyAddres2 = companyClientSetup.CmpnyAddres2;
-                result.CmpnyContNo = companyClientSetup.CmpnyContNo;
-                result.MakerDatetime = DateTime.Now;
-                result.MakerId = companyClientSetup.MakerId;
-                result.MakerwrkstId = companyClientSetup.MakerwrkstId;
+            var result = _hMISManagementContext.companyClientSetups.Update(companyClientSetup);
+            await _hMISManagementContext.SaveChangesAsync();
+            return result.Entity;
+            //var result = await _hMISManagementContext.companyClientSetups.FirstOrDefaultAsync(a => a.CmpnyClintCode == companyClientSetup.CmpnyClintCode);
+            //if (result != null)
+            //{
+            //    result.CmpnyClintCode = companyClientSetup.CmpnyClintCode;
+            //    result.CmpnyClintName = companyClientSetup.CmpnyClintName;
+            //    result.CmpnyAddres = companyClientSetup.CmpnyAddres;
+            //    result.CmpnyAddres1 = companyClientSetup.CmpnyAddres1;
+            //    result.CmpnyAddres2 = companyClientSetup.CmpnyAddres2;
+            //    result.CmpnyContNo = companyClientSetup.CmpnyContNo;
+            //    result.MakerDatetime = DateTime.Now;
+            //    result.MakerId = companyClientSetup.MakerId;
+            //    result.MakerwrkstId = companyClientSetup.MakerwrkstId;
 
-                result.UpdateDatetime = DateTime.Now;
-                result.UpdateId = companyClientSetup.UpdateId;
-                result.UpdatewrkstId = companyClientSetup.UpdatewrkstId;
-                result.OldClientId = companyClientSetup.OldClientId;
-                
-                await _hMISManagementContext.SaveChangesAsync();
-                return result;
-            }
-            return null;
+            //    result.UpdateDatetime = DateTime.Now;
+            //    result.UpdateId = companyClientSetup.UpdateId;
+            //    result.UpdatewrkstId = companyClientSetup.UpdatewrkstId;
+            //    result.OldClientId = companyClientSetup.OldClientId;
+
+            //    await _hMISManagementContext.SaveChangesAsync();
+            //    return result;
+            //}
+            //return null;
             //throw new NotImplementedException();
         }
     }

@@ -35,8 +35,23 @@ namespace HMISWebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("GetCitySetupByIdAll")]
+        public async Task<ActionResult<CitySetup>> GetCitySetupByIdAll(string Id)
+        {
+            try
+            {
+                var result = await _citySetup.GetCitySetupByIdAll(Id);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Data is not retrieving from database");
+            }
+        }
+
+        [HttpGet]
         [Route("GetCitySetupById")]
-        public async Task<ActionResult<CitySetup>> GetCitySetupById(string Id)
+        public async Task<ActionResult<CitySetupDTO>> GetCitySetupById(string Id)
         {
             try
             {
@@ -71,21 +86,43 @@ namespace HMISWebAPI.Controllers
 
         [HttpPut]
         [Route("UpdateCitySetup")]
+        //public async Task<ActionResult<CitySetup>> UpdateCitySetup(string Id, CitySetup citySetup)
+        //{
+        //    try
+        //    {
+        //        if (Id != citySetup.CityCode)
+        //        {
+        //            return BadRequest("Id Mismatched");
+        //        }
+        //        var updateCitySetup = await _citySetup.GetCitySetupById(Id);
+        //        if (updateCitySetup == null)
+        //        {
+        //            return NotFound($"Employee employee.Id ={Id} Not Found");
+        //        }
+        //        var employeeUpdate = await _citySetup.UpdateCitySetup(citySetup);
+        //        return employeeUpdate;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, "Data is not retrieving from database");
+        //    }
+        //}
+
         public async Task<ActionResult<CitySetup>> UpdateCitySetup(string Id, CitySetup citySetup)
         {
             try
             {
-                if (Id != citySetup.CityCode)
+                if (String.IsNullOrEmpty(Id))
                 {
                     return BadRequest("Id Mismatched");
                 }
                 var updateCitySetup = await _citySetup.GetCitySetupById(Id);
                 if (updateCitySetup == null)
                 {
-                    return NotFound($"Employee employee.Id ={Id} Not Found");
+                    return NotFound($"City Setup city.Id ={Id} Not Found");
                 }
-                var employeeUpdate = await _citySetup.UpdateCitySetup(citySetup);
-                return employeeUpdate;
+                var citySetupUpdate = await _citySetup.UpdateCitySetup(Id,citySetup);
+                return citySetupUpdate;
             }
             catch (Exception ex)
             {
@@ -100,7 +137,7 @@ namespace HMISWebAPI.Controllers
             var employeeDelete = await _citySetup.DeleteCitySetup(Id);
             if (employeeDelete == null)
             {
-                return NotFound($"Employee Id = {Id} Not Found");
+                return NotFound($"CitySetup Id = {Id} Not Found");
             }
             return await _citySetup.DeleteCitySetup(Id);
         }

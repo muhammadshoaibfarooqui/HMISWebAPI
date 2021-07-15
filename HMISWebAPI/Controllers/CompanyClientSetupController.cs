@@ -35,8 +35,23 @@ namespace HMISWebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("GetCompanyClientSetupByIdAll")]
+        public async Task<ActionResult<CompanyClientSetup>> GetCompanyClientSetupByIdAll(string Id)
+        {
+            try
+            {
+                var result = await _companyClientSetup.GetCompanyClientSetupByIdAll(Id);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Data is not retrieving from database");
+            }
+        }
+
+        [HttpGet]
         [Route("GetCompanyClientSetupById")]
-        public async Task<ActionResult<CompanyClientSetup>> GetCompanyClientSetupById(string Id)
+        public async Task<ActionResult<CompanyClientSetupDTO>> GetCompanyClientSetupById(string Id)
         {
             try
             {
@@ -71,11 +86,33 @@ namespace HMISWebAPI.Controllers
 
         [HttpPut]
         [Route("UpdateCompanyClientSetup")]
+        //public async Task<ActionResult<CompanyClientSetup>> UpdateCompanyClientSetup(string Id, CompanyClientSetup companyClientSetup)
+        //{
+        //    try
+        //    {
+        //        if (Id != companyClientSetup.CmpnyClintCode)
+        //        {
+        //            return BadRequest("Id Mismatched");
+        //        }
+        //        var updateCompanyClientSetup = await _companyClientSetup.GetCompanyClientSetupById(Id);
+        //        if (updateCompanyClientSetup == null)
+        //        {
+        //            return NotFound($"CompanyClientSetup companyClientSetup.CmpnyClintCode ={Id} Not Found");
+        //        }
+        //        var comapnyClientSetupUpdate = await _companyClientSetup.UpdateCompanyClientSetup(companyClientSetup);
+        //        return comapnyClientSetupUpdate;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, "Data is not retrieving from database");
+        //    }
+        //}
+
         public async Task<ActionResult<CompanyClientSetup>> UpdateCompanyClientSetup(string Id, CompanyClientSetup companyClientSetup)
         {
             try
             {
-                if (Id != companyClientSetup.CmpnyClintCode)
+                if (String.IsNullOrEmpty(Id))
                 {
                     return BadRequest("Id Mismatched");
                 }
@@ -84,7 +121,7 @@ namespace HMISWebAPI.Controllers
                 {
                     return NotFound($"CompanyClientSetup companyClientSetup.CmpnyClintCode ={Id} Not Found");
                 }
-                var comapnyClientSetupUpdate = await _companyClientSetup.UpdateCompanyClientSetup(companyClientSetup);
+                var comapnyClientSetupUpdate = await _companyClientSetup.UpdateCompanyClientSetup(Id,companyClientSetup);
                 return comapnyClientSetupUpdate;
             }
             catch (Exception ex)

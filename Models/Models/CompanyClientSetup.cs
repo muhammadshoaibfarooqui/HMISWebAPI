@@ -23,4 +23,12 @@ namespace Models.Models
         public string UpdatewrkstId { get; set; }
         public string OldClientId { get; set; }
     }
+
+    public partial class CompanyClientSetupDTO
+    {
+        public string CmpnyClintCode { get; set; }
+        public string CmpnyClintName { get; set; }
+        public string CmpnyAddres { get; set; }       
+        public string CmpnyContNo { get; set; }
+    }
 }
